@@ -1,0 +1,27 @@
+spring:
+     datasource:
+       username: root
+       password: admin
+       driver-class-name: com.mysql.jdbc.Driver
+       url: jdbc:mysql://127.0.0.1:3306/wenku?characterEncoding=UTF-8
+       #url: jdbc:mysql://120.78.88.153:3306/wenku?characterEncoding=UTF-8
+     jpa:
+       hibernate:
+         ddl-auto: update
+         naming:
+           strategy: org.hibernate.cfg.ImprovedNamingStrategy
+       show-sql: true
+       #FormatSql
+       properties:
+         hibernate:
+          format_sql: true
+     thymeleaf:
+       mode: HTML5
+       prefix: classpath:/templates/
+       suffix: .html
+       encoding: UTF-8
+       content-type: text/html
+       cache: false
+     mvc:
+       view:
+         suffix: .html

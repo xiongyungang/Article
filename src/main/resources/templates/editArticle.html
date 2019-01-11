@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>编辑文章</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link href="https://cdn.bootcss.com/materialize/0.97.8/css/materialize.min.css" rel="stylesheet"/>
+</head>
+
+<body>
+
+<!--导航栏-->
+<nav class="teal lighten-1" role="navigation">
+    <div class="nav-wrapper container">
+        <a id="logo-container" href="/" class="flow-text">好文章</a>
+        <ul class="right hide-on-med-and-down">
+            <li>
+                <a href="#" id="button-collapse" data-activates="slide-out"><i
+                        class="material-icons white-text">menu</i></a>
+            </li>
+        </ul>
+
+        <!--移动端-->
+        <ul id="nav-mobile" class="side-nav">
+            <li>
+                <a href="#">Navbar Link</a>
+            </li>
+            <li>
+                <a href="#">Navbar Link</a>
+            </li>
+            <li>
+                <a href="#">Navbar Link</a>
+            </li>
+        </ul>
+        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+</nav>
+
+<!--侧边导航-->
+<ul id="slide-out" class="side-nav">
+    <li>
+        <div class="userView">
+            <div class="background">
+                <!--<img src="images/office.jpg">-->
+            </div>
+            <!--<a href="#!user"><img class="circle" src="images/yuna.jpg"></a>-->
+            <a href="#!name"><span class="white-text name">张三</span></a>
+            <a href="#!email"><span class="white-text email">jdandturk@sina.com</span></a>
+        </div>
+    </li>
+    <li>
+        <a href="#!"><i class="material-icons">cloud</i>带图标的第一链接</a>
+    </li>
+    <li>
+        <a href="#!">第二链接</a>
+    </li>
+    <li>
+        <div class="divider"></div>
+    </li>
+    <li>
+        <a class="subheader">子标题</a>
+    </li>
+    <li>
+        <a class="waves-effect" href="#!">带波纹效果的第三链接</a>
+    </li>
+</ul>
+
+<div class="container">
+    <div class="row">
+        <form>
+            <br/><br/>
+            <input id="articleId" type="hidden" th:value="${article?.articleId}" />
+            <!--<div class="chips chips-placeholder" th:utext="${article?.title}"></div>-->
+
+            <!--标题-->
+            <div class="input-field">
+                <i class="material-icons prefix text-accent-1">mode_edit</i>
+                <input id="title" name="title" type="text" th:value="${article?.title}"/>
+                <label for="title">请输入文章标题</label>
+            </div>
+            <!--编辑器-->
+            <div id="editor" class="section" th:utext="${article?.contentHtml}">
+            </div>
+                <!--分类列表-->
+                <a class='dropdown-button btn left' data-activates='dropdown1'>选择分类</a>
+                <ul id='dropdown1' class='dropdown-content'>
+                    <li th:each="category:${categorys}">
+                        <a href="#" th:text="${category.categoryName}">分类名称</a>
+                    </li>
+                </ul>
+        </form>
+        <!--发布按钮-->
+        <button class="btn waves-effect waves-light sendBtn right">提交
+            <i class="material-icons right">send</i>
+        </button>
+    </div>
+</div>
+
+<!--页脚-->
+<footer class="page-footer teal">
+    <div class="container">
+        <div class="row">
+            <div class="col l6 s12">
+                <h5 class="white-text">关于</h5>
+                <p class="grey-text text-lighten-4">都是垃圾分类空间的身份极乐世界</p>
+
+            </div>
+            <div class="col l3 s12">
+                <h5 class="white-text">设置</h5>
+                <ul>
+                    <li>
+                        <a class="white-text" href="#!">Link 1</a>
+                    </li>
+                    <li>
+                        <a class="white-text" href="#!">Link 2</a>
+                    </li>
+                    <li>
+                        <a class="white-text" href="#!">Link 3</a>
+                    </li>
+                    <li>
+                        <a class="white-text" href="#!">Link 4</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col l3 s12">
+                <h5 class="white-text">Connect</h5>
+                <ul>
+                    <li>
+                        <a class="white-text" href="#!">Link 1</a>
+                    </li>
+                    <li>
+                        <a class="white-text" href="#!">Link 2</a>
+                    </li>
+                    <li>
+                        <a class="white-text" href="#!">Link 3</a>
+                    </li>
+                    <li>
+                        <a class="white-text" href="#!">Link 4</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            Made by
+            <a class="brown-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+        </div>
+    </div>
+</footer>
+
+<!--jQuery-->
+<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/materialize/0.97.8/js/materialize.min.js"></script>
+
+<!--富文本编辑器-->
+<script src="https://cdn.bootcss.com/wangEditor/10.0.13/wangEditor.min.js"></script>
+
+<!--通用js-->
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../js/editArticle.js"></script>
+
+<script>
+    //初始化
+    $(function () {
+        editArticle.init();
+    });
+</script>
+
+</body>
+
+</html>
