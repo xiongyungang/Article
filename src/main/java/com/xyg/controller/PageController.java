@@ -78,6 +78,10 @@ public class PageController {
         return "/editArticle";
     }
 
+    /**
+     * 个人中心
+     * @return
+     */
     @GetMapping(value = "/personal")
     public String personal() {
         return "/personal";

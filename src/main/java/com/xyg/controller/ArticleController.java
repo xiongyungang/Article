@@ -92,6 +92,8 @@ public class ArticleController {
         //创建时间
         article.setCreateTime(articleById.getCreateTime());
         article.setAuthor(articleById.getAuthor());
+        article.setUser(articleById.getUser());
+        article.setCategory(articleById.getCategory());
 
         articleService.saveArticle(article);
         return Result.success("ok");
