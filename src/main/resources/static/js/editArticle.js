@@ -25,13 +25,24 @@ var editArticle = {
             var articleId = $("#articleId").val();
             //获取标题
             var title = $("#title").val();
+            //获取内容
+            var content = editor.txt.text();
+
             //标题不为空时更新
             if(articleId&&articleId!="") {
                 //更新操作
-                editArticle.updateArticle(editor.txt.text(),editor.txt.html(),title,cateName,articleId);
+                if(content == "" || $.trim(content).length < 50){
+                    Materialize.toast('内容不足50字', 4000);
+                    return false;
+                }
+                editArticle.updateArticle(content,editor.txt.html(),title,cateName,articleId);
             }else {
                 //新增操作
-                editArticle.saveArticle(editor.txt.text(),editor.txt.html(),title,cateName);
+                if(content == "" || $.trim(content).length < 50){
+                    Materialize.toast('内容不足50字', 4000);
+                    return false;
+                }
+                editArticle.saveArticle(content,editor.txt.html(),title,cateName);
             }
         });
 
@@ -79,7 +90,7 @@ var editArticle = {
                 "content":content,
                 "contentHtml":contentHtml,
                 "title":title,
-                //category
+                //todo:category
                 "articleId":articleId
             },
             success:function (result) {

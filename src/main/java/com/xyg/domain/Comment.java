@@ -11,6 +11,7 @@ public class Comment {
     private String content;
     private Article article;
     private User user;
+    private String userName;
 
     @Id
     @GeneratedValue
@@ -56,5 +57,25 @@ public class Comment {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "commentId=" + commentId +
+                ", createTime=" + createTime +
+                ", content='" + content + '\'' +
+                ", article=" + article +
+                ", user=" + user +
+                ", userName='" + userName + '\'' +
+                '}';
     }
 }

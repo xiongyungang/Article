@@ -43,27 +43,27 @@
     <li>
         <div class="userView">
             <div class="background">
-                <!--<img src="images/office.jpg">-->
+                <img src="images/office.jpg"/>
             </div>
-            <!--<a href="#!user"><img class="circle" src="images/yuna.jpg"></a>-->
+            <a href="#!user"><img class="circle" src="images/yuna.jpg"/></a>
             <a href="#!name"><span class="white-text name">张三</span></a>
             <a href="#!email"><span class="white-text email">jdandturk@sina.com</span></a>
         </div>
     </li>
     <li>
-        <a href="#!"><i class="material-icons">cloud</i>带图标的第一链接</a>
+        <a href="/articles"><i class="material-icons">cloud</i>文章列表</a>
     </li>
     <li>
-        <a href="#!">第二链接</a>
+        <a href="/postArticle">发布文章</a>
     </li>
     <li>
         <div class="divider"></div>
     </li>
     <li>
-        <a class="subheader">子标题</a>
+        <a class="subheader">个人中心</a>
     </li>
-    <li>
-        <a class="waves-effect" href="#!">带波纹效果的第三链接</a>
+    <li id="logout">
+        <a class="waves-effect">退出</a>
     </li>
 </ul>
 
@@ -80,7 +80,46 @@
                 </p>
             </div>
         </div>
+        <!--文章id-->
+        <input id="articleId" type="hidden" th:value="${article?.articleId}" />
+        <div th:hidden="${status}">
+            删除文章|编辑文章
+        </div>
+
+        <br/><br/><hr/>
+        <!--评论列表-->
+        <div  th:each="comment:${comments}">
+            <div class="card-panel grey lighten-3">
+                <p th:utext="${comment?.userName}"></p>
+                <p th:utext="${comment?.content}"></p>
+                <p th:utext="${comment?.createTime}"></p>
+                <a href="#!" class="waves-effect waves-circle waves-light btn-floating secondary-content">
+                    <i class="material-icons">add</i>
+                </a>
+            </div>
+        </div>
+
+        <!--评论编辑区域-->
+        <div id="editor" class="section">
+        </div>
+        <!--发布按钮-->
+        <button class="btn waves-effect waves-light sendCom right">提交
+            <i class="material-icons right">send</i>
+        </button>
     </div>
+</div>
+
+<!--全局选项按钮-->
+<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+    <a class="btn-floating btn-large teal">
+        <i class="material-icons">mode_edit</i>
+    </a>
+    <ul>
+        <li><a class="btn-floating red" style="transform: scaleY(0.4) scaleX(0.4) translateY(40px) translateX(0px); opacity: 0;"><i class="material-icons">insert_chart</i></a></li>
+        <li><a class="btn-floating yellow darken-1" style="transform: scaleY(0.4) scaleX(0.4) translateY(40px) translateX(0px); opacity: 0;"><i class="material-icons">format_quote</i></a></li>
+        <li><a class="btn-floating green" style="transform: scaleY(0.4) scaleX(0.4) translateY(40px) translateX(0px); opacity: 0;"><i class="material-icons">publish</i></a></li>
+        <li><a class="btn-floating blue" style="transform: scaleY(0.4) scaleX(0.4) translateY(40px) translateX(0px); opacity: 0;"><i class="material-icons">attach_file</i></a></li>
+    </ul>
 </div>
 
 <!--页脚-->
@@ -140,8 +179,19 @@
 <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/materialize/0.97.8/js/materialize.min.js"></script>
 
+<!--富文本编辑器-->
+<script src="https://cdn.bootcss.com/wangEditor/10.0.13/wangEditor.min.js"></script>
+
 <!--通用js-->
 <script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript" src="/js/editComment.js"></script>
+
+<script>
+    //初始化
+    $(function () {
+        editComment.init();
+    });
+</script>
 </body>
 
 </html>

@@ -1,10 +1,10 @@
 spring:
      datasource:
        username: root
-       password: admin
+       password: root
        driver-class-name: com.mysql.jdbc.Driver
-       url: jdbc:mysql://127.0.0.1:3306/wenku?characterEncoding=UTF-8
-       #url: jdbc:mysql://120.78.88.153:3306/wenku?characterEncoding=UTF-8
+       #url: jdbc:mysql://127.0.0.1:3306/wenku?characterEncoding=UTF-8
+       url: jdbc:mysql://120.78.88.153:3306/wenku?characterEncoding=UTF-8
      jpa:
        hibernate:
          ddl-auto: update

@@ -87,12 +87,25 @@ public class ArticleController {
     @PutMapping(value = "/article", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public Result updateArticle(Article article) {
-        System.err.println("article = " + article);
+        System.out.printf(article.toString());
         Article articleById = articleService.findArticleById(article.getArticleId());
         //创建时间
         article.setCreateTime(articleById.getCreateTime());
+        article.setAuthor(articleById.getAuthor());
 
         articleService.saveArticle(article);
+        return Result.success("ok");
+    }
+
+    /**
+     * 删除文章
+     * @param articleId
+     * @return
+     */
+    @DeleteMapping(value = "/article", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public Result deleteArticleById(Integer articleId) {
+        articleService.deleteArticleById(articleId);
         return Result.success("ok");
     }
 }
