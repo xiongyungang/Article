@@ -53,14 +53,21 @@ public class PageController {
         Article article = articleService.findArticleById(articleId);
         List<Comment> comments = commentService.getComments(article);
         User user =(User) session.getAttribute("user");
-        //判断当前文章是否属于登陆用户（用户可编辑）
-        if (user.getUserId().equals(article.getUser().getUserId())) {
-            model.addAttribute("status", "false");
-        } else {
+        if (user == null) {
+            //游客不可编辑文章
             model.addAttribute("status", "true");
+            model.addAttribute("article", article);
+            model.addAttribute("comments", comments);
+        }else {
+            //判断当前用户可否编辑
+            if (user.getUserId().equals(article.getUser().getUserId())) {
+                model.addAttribute("status", "false");
+            } else {
+                model.addAttribute("status", "true");
+            }
+            model.addAttribute("article", article);
+            model.addAttribute("comments", comments);
         }
-        model.addAttribute("article", article);
-        model.addAttribute("comments", comments);
         return "/detailArticle";
     }
 
@@ -68,9 +75,15 @@ public class PageController {
      * 跳转编辑文章页面
      */
     @GetMapping(value = "/edit/{articleId}")
-    public String editArticle(@PathVariable("articleId") Integer articleId, Model model) {
+    public String editArticle(@PathVariable("articleId") Integer articleId, Model model,HttpSession session) {
         //获取文章
         Article article = articleService.findArticleById(articleId);
+        //todo:传递错误信息
+        //判断文章和用户的关系
+        User user = (User) session.getAttribute("user");
+        if (!article.getUser().getUserId().equals(user.getUserId())) {
+            return "/error";
+        }
         //获取分类
         List<Category> categories = categoryService.getAll();
         model.addAttribute("categorys", categories);

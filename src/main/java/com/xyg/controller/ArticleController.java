@@ -86,14 +86,15 @@ public class ArticleController {
      */
     @PutMapping(value = "/article", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public Result updateArticle(Article article) {
+    public Result updateArticle(Article article,String cateName) {
         System.out.printf(article.toString());
         Article articleById = articleService.findArticleById(article.getArticleId());
+        Category category = categoryService.getByName(cateName);
         //创建时间
         article.setCreateTime(articleById.getCreateTime());
         article.setAuthor(articleById.getAuthor());
         article.setUser(articleById.getUser());
-        article.setCategory(articleById.getCategory());
+        article.setCategory(category);
 
         articleService.saveArticle(article);
         return Result.success("ok");

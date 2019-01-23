@@ -82,7 +82,7 @@ var editArticle = {
 
     },
     //修改文章
-    updateArticle:function (content,contentHtml,title,category,articleId) {
+    updateArticle:function (content,contentHtml,title,cateName,articleId) {
         $.ajax({
             url:"/article",
             type:"put",
@@ -90,7 +90,7 @@ var editArticle = {
                 "content":content,
                 "contentHtml":contentHtml,
                 "title":title,
-                //todo:category
+                "category":cateName,
                 "articleId":articleId
             },
             success:function (result) {

@@ -135,6 +135,7 @@
 		<!--<div class="progress">
 			<div class="indeterminate"></div>
 		</div>-->
+		<div id="bar" hidden="hidden" value="0">
 		<div class="preloader-wrapper small active">
 			<div class="spinner-layer spinner-green-only">
 				<div class="circle-clipper left">
@@ -147,6 +148,7 @@
 					<div class="circle"></div>
 				</div>
 			</div>
+		</div>
 		</div>
 		<!--页脚-->
 		<footer class="page-footer teal">
@@ -256,6 +258,7 @@
 //						$("#xyg").append("<div class='container'><div class='section'><div class='row'><div class='col s12 center'><h3><i class='mdi-content-send brown-text'></i></h3><h4>关于你</h4><p class='left-align light'> 就是因为我的害怕，我亲眼看你走向她。我喜欢你是事实，你有女朋友也是事实。</p></div></div></div></div>");
 
 
+                        $("#bar").attr("value", "0");
                         //这里写加载数据代码  加载数据完成把 hid_isload设置成0 变为可滚动
 						$.ajax({
 							url:"/findOne",

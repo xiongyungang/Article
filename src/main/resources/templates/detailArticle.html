@@ -79,12 +79,14 @@
                 <p class="flow-text" th:utext="${article?.contentHtml}">
                 </p>
             </div>
+            <!--编辑删除-->
+            <div th:hidden="${status}">
+                <a th:href="'/edit/'+${article?.articleId}">编辑文章</a>
+                <a href="#">删除文章</a>
+            </div>
         </div>
         <!--文章id-->
         <input id="articleId" type="hidden" th:value="${article?.articleId}" />
-        <div th:hidden="${status}">
-            删除文章|编辑文章
-        </div>
 
 
         <!--评论列表-->
