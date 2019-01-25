@@ -86,11 +86,12 @@ var editArticle = {
         $.ajax({
             url:"/article",
             type:"put",
+            dataType:"json",
             data:{
                 "content":content,
                 "contentHtml":contentHtml,
                 "title":title,
-                "category":cateName,
+                "cateName":cateName,
                 "articleId":articleId
             },
             success:function (result) {

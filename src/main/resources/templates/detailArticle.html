@@ -73,6 +73,7 @@
         <div class="center">
             <h1 class="flow-text" th:text="${article?.title}">文章标题</h1>
         </div>
+
         <!--文章内容-->
         <div style="min-height: 500px;height:auto !important;height:500px;">
             <div class="card-panel hoverable">
@@ -80,26 +81,24 @@
                 </p>
             </div>
             <!--编辑删除-->
-            <div th:hidden="${status}">
-                <a th:href="'/edit/'+${article?.articleId}">编辑文章</a>
-                <a href="#">删除文章</a>
+            <div th:hidden="${status}" class="right-align">
+                <a th:href="'/edit/'+${article?.articleId}" class="grey-text text-lighten-1">编辑文章</a>
+                <a href="javascript:void(0);" class="deep-orange-text deep-orange-lighten-3 delLink">删除文章</a>
             </div>
         </div>
         <!--文章id-->
         <input id="articleId" type="hidden" th:value="${article?.articleId}" />
 
-
         <!--评论列表-->
-        <div  th:each="comment:${comments}">
-            <div class="card-panel grey lighten-3">
+        <ul class="collection" th:each="comment:${comments}">
+            <li class="collection-item avatar">
+                <i class="material-icons circle green">insert_chart</i>
                 <p th:utext="${comment?.userName}"></p>
                 <p th:utext="${comment?.content}"></p>
                 <p th:utext="${comment?.createTime}"></p>
-                <a href="#!" class="waves-effect waves-circle waves-light btn-floating secondary-content">
-                    <i class="material-icons">add</i>
-                </a>
-            </div>
-        </div>
+                <a href="javascript:void(0);" class="secondary-content"><i class="material-icons">thumb_up</i><span class="black-text"> 0</span></a>
+            </li>
+        </ul>
 
         <!--评论编辑区域-->
         <div id="editor" class="section">

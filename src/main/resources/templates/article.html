@@ -172,6 +172,7 @@
     $(".tab").on("click", "a", function () {
         var con = $(this).text();
         window.location.href = "/articles/" + con + "/0";
+        //todo：点击的li下的a标签设为active，去除旧active
     });
 
     //点击文章卡片跳转详细页面

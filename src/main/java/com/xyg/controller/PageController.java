@@ -60,6 +60,7 @@ public class PageController {
             model.addAttribute("comments", comments);
         }else {
             //判断当前用户可否编辑
+            //todo:有bug，有时已经登陆不显示
             if (user.getUserId().equals(article.getUser().getUserId())) {
                 model.addAttribute("status", "false");
             } else {
