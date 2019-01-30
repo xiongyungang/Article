@@ -4,6 +4,7 @@ import com.xyg.domain.Article;
 import com.xyg.domain.Comment;
 import com.xyg.repository.CommentRepository;
 import com.xyg.service.CommentService;
+import com.xyg.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
@@ -33,6 +34,32 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<Comment> getComments(Article article) {
         return commentRepository.findCommentsByArticle(article);
+    }
+
+    /**
+     * 根据评论id进行点赞和取消点赞
+     * @param commentId
+     */
+    @Override
+    public Result voteChange(Integer commentId) {
+        Comment comment = commentRepository.findCommentsByCommentId(commentId);
+        if (comment == null){
+            return Result.error("not found comment");
+        }
+
+        //1为点赞状态
+        if (comment.getVoteStates() == null) {
+            comment.setVoteStates(1);
+        } else {
+            if (comment.getVoteStates() != 1) {
+                comment.setVoteStates(1);
+            } else {
+                comment.setVoteStates(0);
+            }
+        }
+
+        commentRepository.save(comment);
+        return Result.success("ok");
     }
 
 }

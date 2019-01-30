@@ -49,7 +49,7 @@ public class ArticleRepositoryTest {
     @Test
     public void findById() throws Exception {
         Article one = articleRepository.findOne(1);
-        System.out.println(one);
+        System.out.println(one.getComments());
     }
 
     @Test

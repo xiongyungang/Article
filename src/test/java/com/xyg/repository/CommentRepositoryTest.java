@@ -25,4 +25,10 @@ public class CommentRepositoryTest {
         List<Comment> comments = commentRepository.findCommentsByArticle(article);
     }
 
+    @Test
+    public void getCommentById() {
+        Comment commentsByCommentId = commentRepository.findCommentsByCommentId(1);
+        System.out.printf(commentsByCommentId.getContent());
+    }
+
 }

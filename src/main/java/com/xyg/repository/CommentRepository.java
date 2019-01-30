@@ -12,4 +12,11 @@ public interface CommentRepository extends JpaRepository<Comment, Integer> {
      * @return
      */
     public List<Comment> findCommentsByArticle(Article article);
+
+    /**
+     * 根据评论id获取一条评论
+     * @param commentId
+     * @return
+     */
+    public Comment findCommentsByCommentId(Integer commentId);
 }

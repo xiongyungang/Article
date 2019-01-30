@@ -12,6 +12,8 @@ public class Comment {
     private Article article;
     private User user;
     private String userName;
+    //点赞状态
+    private Integer voteStates;
 
     @Id
     @GeneratedValue
@@ -67,6 +69,14 @@ public class Comment {
         this.userName = userName;
     }
 
+    public Integer getVoteStates() {
+        return voteStates;
+    }
+
+    public void setVoteStates(Integer voteStates) {
+        this.voteStates = voteStates;
+    }
+
     @Override
     public String toString() {
         return "Comment{" +
@@ -76,6 +86,7 @@ public class Comment {
                 ", article=" + article +
                 ", user=" + user +
                 ", userName='" + userName + '\'' +
+                ", voteStates=" + voteStates +
                 '}';
     }
 }

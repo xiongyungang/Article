@@ -75,9 +75,12 @@ var editComment = {
             if(botton.attr("class")=="material-icons red-text"){
                 //取消
                 botton.attr("class","material-icons");
+                $.get("/comment/vote/"+$(this).prev().val());
             }else {
                 //点赞
+                //todo:users vote
                 botton.attr("class","material-icons red-text");
+                $.get("/comment/vote/"+$(this).prev().val());
             }
         })
     }

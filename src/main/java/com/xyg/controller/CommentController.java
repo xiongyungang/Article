@@ -8,10 +8,13 @@ import com.xyg.service.CommentService;
 import com.xyg.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.GET;
 import java.util.Date;
 
 
@@ -44,5 +47,16 @@ public class CommentController {
 
         commentService.saveComment(comment);
         return Result.success("ok");
+    }
+
+    /**
+     * 点赞
+     * @param commentId
+     * @return
+     */
+    @GetMapping(value = "/comment/vote/{commentId}")
+    @ResponseBody
+    public Result changeVote(@PathVariable("commentId") Integer commentId) {
+        return commentService.voteChange(commentId);
     }
 }

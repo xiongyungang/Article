@@ -96,7 +96,8 @@
                 <p th:utext="${comment?.userName}"></p>
                 <p th:utext="${comment?.content}"></p>
                 <p th:utext="${comment?.createTime}"></p>
-                <a href="javascript:void(0);" class="secondary-content"><i class="material-icons">thumb_up</i><span class="black-text"> 0</span></a>
+                <input id="commentId" type="hidden" th:value="${comment?.commentId}" />
+                <a href="javascript:void(0);" class="secondary-content"><i th:class="${comment?.voteStates}==1?'material-icons red-text':'material-icons'">thumb_up</i></a>
             </li>
         </ul>
 
