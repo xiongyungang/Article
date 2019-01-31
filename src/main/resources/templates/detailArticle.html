@@ -71,12 +71,16 @@
     <div class="row">
         <!--文章标题-->
         <div class="center">
-            <h1 class="flow-text" th:text="${article?.title}">文章标题</h1>
+            <h3 th:text="${article?.title}">文章标题</h3>
         </div>
-
+        <!--收藏-->
+        <div class="right">
+            <a href="javascript:void(0);" id="favorite" class="grey-text"><i class="material-icons">grade</i></a>
+        </div>
+        <br/>
         <!--文章内容-->
         <div style="min-height: 500px;height:auto !important;height:500px;">
-            <div class="card-panel hoverable">
+            <div class="card-panel hoverable  teal lighten-5">
                 <p class="flow-text" th:utext="${article?.contentHtml}">
                 </p>
             </div>
@@ -90,6 +94,7 @@
         <input id="articleId" type="hidden" th:value="${article?.articleId}" />
 
         <!--评论列表-->
+        <h4>评论</h4>
         <ul class="collection" th:each="comment:${comments}">
             <li class="collection-item avatar">
                 <i class="material-icons circle green">insert_chart</i>
@@ -191,6 +196,11 @@
 <script>
     //初始化
     $(function () {
+        $.get("/favorite/"+$("#articleId").val(), function(result){
+            if(result['status']==200) {
+                alert("已经收藏");
+            }
+        });
         editComment.init();
     });
 </script>

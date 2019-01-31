@@ -9,6 +9,7 @@
 		<!-- CSS  -->
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
 		<link href="https://cdn.bootcss.com/materialize/0.97.8/css/materialize.min.css" rel="stylesheet"/>
+		<link href="css/default.css" rel="stylesheet"/>
 	</head>
 
 	<body>
@@ -46,14 +47,14 @@
 					<br><br>
 					<h1 class="header center teal-text text-lighten-2">分享好文章~</h1>
 					<div class="row center">
-						<h5 class="header col s12 light">你说来就来设计方法就打算离开房间</h5>
+						<h5 class="header col s12 light">山外青山楼外楼，西湖歌舞几时休？暖风熏得游人醉，直把杭州作汴州。 —— 林升《题临安邸》</h5>
 					</div>
 					<div class="row center">
 						<a href="/articles" id="download-button" class="btn-large waves-effect waves-light teal lighten-1">随便看看</a>
 					</div>
 				</div>
 			</div>
-			<div class="parallax"><img src="img/background3.jpg" alt="Unsplashed background img 1"></div>
+			<div class="parallax"><img src="http://120.78.88.153:8080/group1/M00/00/00/rBImOlxGw86AE6IsAAGEu80MNUw835.jpg" alt="Unsplashed background img 1"></div>
 		</div>
 
 		<!--大图标-->
@@ -95,17 +96,16 @@
 			<div class="section no-pad-bot">
 				<div class="container">
 					<div class="row center">
-						<h5 class="header col s12 light">范德萨减肥了就浪费就酸了搭街坊立刻洒家但是看附件是垃圾分类数据发送链接</h5>
+						<h5 class="header col s12 light">发动机浪费大家分厘卡的手法讲述了附件是</h5>
 					</div>
 				</div>
 			</div>
-			<div class="parallax"><img src="img/background2.jpg" alt="Unsplashed background img 2"></div>
+			<div class="parallax"><img src="http://120.78.88.153:8080/group1/M00/00/00/rBImOlxQN7CAUi9uAAtqZBDk6E8428.jpg" alt="Unsplashed background img 2" ></div>
 		</div>
 
 		<!--内容块-->
 		<div class="container">
 			<div class="section">
-
 				<div class="row">
 					<div class="col s12 center">
 						<h3><i class="mdi-content-send brown-text"></i></h3>
@@ -126,7 +126,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="parallax"><img src="img/background2.jpg" alt="Unsplashed background img 2"></div>
+			<div class="parallax"><img src="http://120.78.88.153:8080/group1/M00/00/00/rBImOlxGw86AE6IsAAGEu80MNUw835.jpg" alt="Unsplashed background img 2"></div>
 		</div>
 
 		<div id="xyg"></div>
@@ -241,6 +241,14 @@
 		<!--通用js-->
 		<script type="text/javascript" src="js/common.js"></script>
 		<script>
+            (function($){
+                $(function(){
+
+                    $('.button-collapse').sideNav();
+                    $('.parallax').parallax();
+
+                }); // end of document ready
+            })(jQuery); // end of jQuery name space
 			//下拉加载
 			var jlheight = 1; //距下边界长度/单位px
 			var totalheight = 0;

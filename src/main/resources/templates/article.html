@@ -81,7 +81,7 @@
 
     <!--文章列表-->
     <div class="row" th:each="article:${articles?.content}">
-        <div class="card hoverable" th:onclick="'javascript:openBox(\''+${article.articleId}+'\')'">
+        <div class="card hoverable amber lighten-5" th:onclick="'javascript:openBox(\''+${article.articleId}+'\')'">
             <div class="card-content">
                 <span class="card-title activator grey-text text-darken-4">
                     <span class=" grey-text text-darken-4" th:text="${article.title}">文章标题</span>

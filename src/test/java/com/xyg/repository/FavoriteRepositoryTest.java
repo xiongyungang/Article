@@ -42,5 +42,19 @@ public class FavoriteRepositoryTest {
         }
     }
 
+    @Test
+    public void delete() {
+        Favorite favorite = new Favorite();
+        User user = new User();
+        user.setUserId(1);
+        favorite.setUser(user);
 
+        Article article = new Article();
+        article.setArticleId(1);
+        favorite.setArticle(article);
+
+        favorite.setId(1);
+
+        favoriteRepository.deleteByArticleAndUser(article,user);
+    }
 }

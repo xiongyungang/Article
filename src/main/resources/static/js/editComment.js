@@ -69,7 +69,7 @@ var editComment = {
             });
         });
 
-        //触发点赞
+        //监听点赞
         $(".secondary-content").click(function () {
             var botton= $(this).find("i");
             if(botton.attr("class")=="material-icons red-text"){
@@ -81,6 +81,22 @@ var editComment = {
                 //todo:users vote
                 botton.attr("class","material-icons red-text");
                 $.get("/comment/vote/"+$(this).prev().val());
+            }
+        });
+
+        //监听收藏
+        $("#favorite").click(function () {
+            var favorite =$(this).children("i");
+            if(favorite.attr("class")=="material-icons red-text") {
+                //取消
+                favorite.attr("class", "material-icons");
+                Materialize.toast('取消收藏！', 1000);
+                $.get("/favorite/"+$("#articleId").val());
+            }else {
+                //确认
+                favorite.attr("class", "material-icons red-text");
+                Materialize.toast('收藏成功！', 4000);
+                $.post("/favorite/"+$("#articleId").val());
             }
         })
     }

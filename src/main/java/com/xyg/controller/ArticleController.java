@@ -87,7 +87,6 @@ public class ArticleController {
     @PutMapping(value = "/article", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public Result updateArticle(Article article,String cateName) {
-        System.out.printf(article.toString());
         Article articleById = articleService.findArticleById(article.getArticleId());
         Category category = categoryService.getByName(cateName);
         //创建时间

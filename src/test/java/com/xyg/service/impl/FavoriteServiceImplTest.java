@@ -20,24 +20,4 @@ public class FavoriteServiceImplTest {
     @Autowired
     private FavoriteService favoriteService;
 
-    @Test
-    public void getFavoriteByUser() throws Exception {
-        User user = new User();
-        user.setUserId(1);
-        Page<Favorite> page = favoriteService.getFavoriteByUser(user, 0);
-        List<Favorite> favorites = page.getContent();
-
-        for (Favorite f :
-                favorites) {
-            System.out.println(f.getCreateTime());
-        }
-    }
-
-    @Test
-    public void isFavorite() throws Exception {
-        User user = new User();
-        user.setUserId(2);
-        System.out.println(favoriteService.isFavorite(user, 1));
-    }
-
 }
