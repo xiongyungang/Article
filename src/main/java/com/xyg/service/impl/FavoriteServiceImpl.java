@@ -83,13 +83,14 @@ public class FavoriteServiceImpl implements FavoriteService {
 
     /**
      * 取消收藏，根据文章和用户
-     * @param article
+     * @param articleId
      * @param user
      * @return
      */
     @Override
-    public Result deleteFavoriteByProperty(Article article, User user) {
+    public Result deleteFavoriteByProperty(User user,Integer articleId) {
         try {
+            Article article = articleRepository.findOne(articleId);
             favoriteRepository.deleteByArticleAndUser(article, user);
         } catch (Exception e) {
             return Result.error(e.getMessage());

@@ -23,7 +23,7 @@ public class MyWebAppConfigurer extends WebMvcConfigurerAdapter {
         // excludePathPatterns 用户排除拦截
 
         //registry.addInterceptor(errorPageInterceptor());
-        registry.addInterceptor(userInterceptor()).addPathPatterns("/**").excludePathPatterns("/article/**").excludePathPatterns("/articles/**").excludePathPatterns("/register.html").excludePathPatterns("/login.html").excludePathPatterns("/user/**").excludePathPatterns("/error/**");
+        registry.addInterceptor(userInterceptor()).addPathPatterns("/**").excludePathPatterns("/article/**").excludePathPatterns("/articles/**").excludePathPatterns("/register.html").excludePathPatterns("/login.html").excludePathPatterns("/user/**").excludePathPatterns("/error/**").excludePathPatterns("/findOne");
 
         super.addInterceptors(registry);
     }

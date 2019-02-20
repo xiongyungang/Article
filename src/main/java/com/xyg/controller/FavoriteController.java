@@ -5,10 +5,7 @@ import com.xyg.service.FavoriteService;
 import com.xyg.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -26,9 +23,9 @@ public class FavoriteController {
      * @param session
      * @return
      */
-    @GetMapping("/favorite/{articleID}")
+    @GetMapping("/favorite/{articleId}")
     @ResponseBody
-    public Result isFavorite(Integer articleId,HttpSession session) {
+    public Result isFavorite(@PathVariable("articleId")Integer articleId,HttpSession session) {
         User user = (User)session.getAttribute("user");
         return favoriteService.isFavorite(user, articleId);
     }
@@ -44,5 +41,18 @@ public class FavoriteController {
     public Result addFavorite(@PathVariable("articleId") Integer articleId, HttpSession session) {
         User user = (User)session.getAttribute("user");
         return favoriteService.addFavorite(user,articleId);
+    }
+
+    /**
+     * 取消收藏
+     * @param articleId
+     * @param session
+     * @return
+     */
+    @DeleteMapping("/favorite/{articleId}")
+    @ResponseBody
+    public Result deleteFavorite(@PathVariable("articleId") Integer articleId, HttpSession session) {
+        User user = (User)session.getAttribute("user");
+        return favoriteService.deleteFavoriteByProperty(user, articleId);
     }
 }

@@ -3,6 +3,7 @@
 *.ipr
 *.iws
 *.idea
+git
 .mvn/
 mvnw
 mvnw.cmd

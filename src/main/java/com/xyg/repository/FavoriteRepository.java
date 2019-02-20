@@ -22,6 +22,7 @@ public interface FavoriteRepository extends JpaRepository<Favorite,Integer>,JpaS
      * @param article
      * @param user
      */
+    //todo:service事务
     @Transactional
     void deleteByArticleAndUser(Article article,User user);
 }

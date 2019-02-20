@@ -8,6 +8,15 @@ import java.io.Serializable;
 public class Category implements Serializable{
     private Integer categoryId;
     private String categoryName;
+    private String color;
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
 
     @Id
     @GeneratedValue
@@ -36,7 +45,8 @@ public class Category implements Serializable{
     public String toString() {
         return "Category{" +
                 "categoryId=" + categoryId +
-                ", categoryName='" + categoryName +
+                ", categoryName='" + categoryName + '\'' +
+                ", color='" + color + '\'' +
                 '}';
     }
 }

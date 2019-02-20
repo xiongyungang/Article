@@ -13,30 +13,7 @@
 <body>
 
 <!--导航栏-->
-<nav class="teal" role="navigation">
-    <div class="nav-wrapper container">
-        <a id="logo-container" href="/" class="flow-text">好文章</a>
-        <ul class="right hide-on-med-and-down">
-            <li>
-                <a href="javascript:void(0);" id="button-collapse" data-activates="slide-out"><i
-                        class="material-icons white-text">menu</i></a>
-            </li>
-        </ul>
-        <!--移动端-->
-        <ul id="nav-mobile" class="side-nav">
-            <li>
-                <a href="#">Navbar Link</a>
-            </li>
-            <li>
-                <a href="#">Navbar Link</a>
-            </li>
-            <li>
-                <a href="#">Navbar Link</a>
-            </li>
-        </ul>
-        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
-    </div>
-</nav>
+<div th:replace="common::head"></div>
 
 <!--侧边导航-->
 <ul id="slide-out" class="side-nav">
@@ -130,57 +107,7 @@
 </div>
 
 <!--页脚-->
-<footer class="page-footer teal">
-    <div class="container">
-        <div class="row">
-            <div class="col l6 s12">
-                <h5 class="white-text">关于</h5>
-                <p class="grey-text text-lighten-4">都是垃圾分类空间的身份极乐世界</p>
-
-            </div>
-            <div class="col l3 s12">
-                <h5 class="white-text">设置</h5>
-                <ul>
-                    <li>
-                        <a class="white-text" href="#!">Link 1</a>
-                    </li>
-                    <li>
-                        <a class="white-text" href="#!">Link 2</a>
-                    </li>
-                    <li>
-                        <a class="white-text" href="#!">Link 3</a>
-                    </li>
-                    <li>
-                        <a class="white-text" href="#!">Link 4</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col l3 s12">
-                <h5 class="white-text">Connect</h5>
-                <ul>
-                    <li>
-                        <a class="white-text" href="#!">Link 1</a>
-                    </li>
-                    <li>
-                        <a class="white-text" href="#!">Link 2</a>
-                    </li>
-                    <li>
-                        <a class="white-text" href="#!">Link 3</a>
-                    </li>
-                    <li>
-                        <a class="white-text" href="#!">Link 4</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="footer-copyright">
-        <div class="container">
-            Made by
-            <a class="brown-text text-lighten-3" href="http://materializecss.com">Materialize</a>
-        </div>
-    </div>
-</footer>
+<div th:replace="common::foot"></div>
 
 <!--jQuery-->
 <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
@@ -198,7 +125,7 @@
     $(function () {
         $.get("/favorite/"+$("#articleId").val(), function(result){
             if(result['status']==200) {
-                alert("已经收藏");
+                $("#favorite").children("i").attr("class", "material-icons red-text");
             }
         });
         editComment.init();

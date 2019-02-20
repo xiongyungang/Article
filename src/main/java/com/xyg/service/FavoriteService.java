@@ -10,6 +10,6 @@ public interface FavoriteService {
     public Page<Favorite> getFavoriteByUser(User user, Integer start);
     public Result addFavorite(User user,Integer articleId);
     public Result deleteFavoriteById(Favorite favorite);
-    public Result deleteFavoriteByProperty(Article article,User user);
+    public Result deleteFavoriteByProperty(User user,Integer articleId);
     public Result isFavorite(User user,Integer articleId);
 }

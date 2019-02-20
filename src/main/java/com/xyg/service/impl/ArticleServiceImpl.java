@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.criteria.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {
@@ -45,7 +46,10 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public Article findArticleByAjax() {
-        return articleRepository.findOne(1);
+        List<Article> articles = articleRepository.getArticlesByUserId();
+        int len = articles.size();
+        int i = new Random().nextInt(len);
+        return articles.get(i);
     }
 
     @Override

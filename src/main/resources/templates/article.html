@@ -11,31 +11,7 @@
 </head>
 <body>
 <!--导航栏-->
-<nav class="teal" role="navigation">
-    <div class="nav-wrapper container">
-        <a id="logo-container" href="/" class="flow-text">好文章</a>
-        <ul class="right hide-on-med-and-down">
-            <li>
-                <a href="javascript:void(0);" id="button-collapse" data-activates="slide-out"><i
-                        class="material-icons white-text">menu</i></a>
-            </li>
-        </ul>
-
-        <!--移动端-->
-        <ul id="nav-mobile" class="side-nav">
-            <li>
-                <a href="#">Navbar Link</a>
-            </li>
-            <li>
-                <a href="#">Navbar Link</a>
-            </li>
-            <li>
-                <a href="#">Navbar Link</a>
-            </li>
-        </ul>
-        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
-    </div>
-</nav>
+<div th:replace="common::head"></div>
 
 <!--侧边导航-->
 <ul id="slide-out" class="side-nav">
@@ -68,20 +44,23 @@
 
 <div class="container">
     <!--分类标签-->
-    <div class="row">
-        <br/><br/>
-        <div class="col s12">
-            <ul class="tabs">
-                <li class="tab"><a href="/articles">所有文章</a></li>
-                <li class="tab" th:each="category:${categorys}"><a href="#" th:text="${category.categoryName}">分类名称</a>
-                </li>
-            </ul>
-        </div>
-    </div>
+    <!--<div class="row">-->
+        <!--<br/><br/>-->
+        <!--<div class="col s12">-->
+            <!--<ul class="tabs">-->
+                <!--<li class="tab"><a href="/articles">所有文章</a></li>-->
+                <!--<li class="tab" th:each="category:${categorys}"><a href="#" th:text="${category.categoryName}">分类名称</a>-->
+                <!--</li>-->
+            <!--</ul>-->
+        <!--</div>-->
+    <!--</div>-->
+    <br/><br/>
+    <a class="btn-flat grey" href="/articles">所有</a>
+    <a th:class="'btn-flat cate '+${category?.color}" th:each="category:${categorys}" th:text="${category.categoryName}">分类</a>
 
     <!--文章列表-->
     <div class="row" th:each="article:${articles?.content}">
-        <div class="card hoverable amber lighten-5" th:onclick="'javascript:openBox(\''+${article.articleId}+'\')'">
+        <div class="card hoverable grey lighten-4" th:onclick="'javascript:openBox(\''+${article.articleId}+'\')'">
             <div class="card-content">
                 <span class="card-title activator grey-text text-darken-4">
                     <span class=" grey-text text-darken-4" th:text="${article.title}">文章标题</span>
@@ -95,71 +74,25 @@
     <!--分页-->
     <ul class="pagination">
         <!--上一页-->
-        <li class="disabled"><a href="/"><i class="material-icons">chevron_left</i></a></li>
+        <span th:style="${articles?.number eq 0}?'display: none':''"><li class="disabled"><a th:href="'/articles/'+${current}+'/'+${articles?.number-1}"><i class="material-icons">chevron_left</i></a></li>
+        </span>
 
         <!--页数-->
+        <span th:style="${articles?.totalPages eq 0}?'display: none':''">
         <li th:class="${pageNo eq articles?.number}?'active':'waves-effect'"
             th:each="pageNo:${#numbers.sequence(0, articles?.totalPages-1)}">
             <a th:href="'/articles/'+${current}+'/'+${pageNo}" th:text="${pageNo+1}">1</a>
         </li>
+        </span>
 
         <!--下一页-->
-        <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+        <span th:style="${articles?.number eq articles?.totalPages-1 or (articles?.totalPages eq 0)}?'display: none':''"><li class="waves-effect"><a th:href="'/articles/'+${current}+'/'+${articles?.number+1}"><i class="material-icons">chevron_right</i></a></li>
+        </span>
     </ul>
 </div>
 
 <!--页脚-->
-<footer class="page-footer teal">
-    <div class="container">
-        <div class="row">
-            <div class="col l6 s12">
-                <h5 class="white-text">关于</h5>
-                <p class="grey-text text-lighten-4">都是垃圾分类空间的身份极乐世界</p>
-
-            </div>
-            <div class="col l3 s12">
-                <h5 class="white-text">设置</h5>
-                <ul>
-                    <li>
-                        <a class="white-text" href="#!">Link 1</a>
-                    </li>
-                    <li>
-                        <a class="white-text" href="#!">Link 2</a>
-                    </li>
-                    <li>
-                        <a class="white-text" href="#!">Link 3</a>
-                    </li>
-                    <li>
-                        <a class="white-text" href="#!">Link 4</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col l3 s12">
-                <h5 class="white-text">Connect</h5>
-                <ul>
-                    <li>
-                        <a class="white-text" href="#!">Link 1</a>
-                    </li>
-                    <li>
-                        <a class="white-text" href="#!">Link 2</a>
-                    </li>
-                    <li>
-                        <a class="white-text" href="#!">Link 3</a>
-                    </li>
-                    <li>
-                        <a class="white-text" href="#!">Link 4</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="footer-copyright">
-        <div class="container">
-            Made by
-            <a class="brown-text text-lighten-3" href="http://materializecss.com">Materialize</a>
-        </div>
-    </div>
-</footer>
+<div th:replace="common::foot"></div>
 
 <!--jQuery-->
 <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
@@ -169,10 +102,9 @@
 <script type="text/javascript" src="/js/common.js"></script>
 <script>
     //点击分类跳转
-    $(".tab").on("click", "a", function () {
+    $(".cate").click(function () {
         var con = $(this).text();
         window.location.href = "/articles/" + con + "/0";
-        //todo：点击的li下的a标签设为active，去除旧active
     });
 
     //点击文章卡片跳转详细页面

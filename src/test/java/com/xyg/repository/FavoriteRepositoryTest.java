@@ -50,7 +50,7 @@ public class FavoriteRepositoryTest {
         favorite.setUser(user);
 
         Article article = new Article();
-        article.setArticleId(1);
+        article.setArticleId(2);
         favorite.setArticle(article);
 
         favorite.setId(1);

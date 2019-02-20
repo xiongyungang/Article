@@ -89,14 +89,39 @@ var editComment = {
             var favorite =$(this).children("i");
             if(favorite.attr("class")=="material-icons red-text") {
                 //取消
-                favorite.attr("class", "material-icons");
-                Materialize.toast('取消收藏！', 1000);
-                $.get("/favorite/"+$("#articleId").val());
+                $.ajax({
+                    url:"/favorite/"+$("#articleId").val(),
+                    type:"post",
+                    dataType:"json",
+                    data:{
+                        _method:"DELETE"
+                    },
+                    success:function (result) {
+                        if(result && result['status']==200) {
+                            favorite.attr("class", "material-icons");
+                            Materialize.toast('取消收藏！', 1000);
+                        }else {
+                            //跳转错误页面
+                            alert(result['data']);
+                        }
+                    },
+                    error:function (result) {
+                        //跳转错误页面
+                        alert("error");
+                    }
+                });
             }else {
                 //确认
-                favorite.attr("class", "material-icons red-text");
-                Materialize.toast('收藏成功！', 4000);
-                $.post("/favorite/"+$("#articleId").val());
+                $.ajax({
+                    url:"/favorite/"+$("#articleId").val(),
+                    type:"post",
+                    success:function (result) {
+                        if(result && result['status']==200) {
+                            favorite.attr("class", "material-icons red-text");
+                            Materialize.toast('收藏成功！', 4000);
+                        }
+                    }
+                });
             }
         })
     }

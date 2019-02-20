@@ -23,6 +23,12 @@ import java.util.List;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 public class ArticleRepositoryTest {
+    @Test
+    public void getArticlesByAjax() throws Exception {
+        List<Article> articles = articleRepository.getArticlesByUserId();
+        articles.get(2);
+    }
+
     @Autowired
     private ArticleRepository articleRepository;
 

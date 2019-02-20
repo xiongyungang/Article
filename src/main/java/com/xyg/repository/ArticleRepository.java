@@ -21,6 +21,13 @@ public interface ArticleRepository extends JpaRepository<Article,Integer>, JpaSp
     List<Article> getArticleByCategory(@Param("name")String name);
 
     /**
+     * 获取user id为1的全部文章
+     * @return
+     */
+    @Query("SELECT a FROM Article a WHERE a.user = 1")
+    List<Article> getArticlesByUserId();
+
+    /**
      * 根据用户获取文章，按创建时间逆序
      * @param user
      * @return
