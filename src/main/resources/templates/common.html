@@ -31,6 +31,52 @@
     </nav>
 </div>
 
+<!--侧边导航-->
+<div th:fragment="left">
+<ul id="slide-out" class="side-nav">
+    <li>
+        <div class="userView">
+            <div class="background">
+                <img src="http://120.78.88.153:8080/group1/M00/00/00/rBImOlxydTyAFidqAAJtTmJBai0621.jpg"/>
+            </div>
+            <a href="#!user"><img class="circle" src="http://120.78.88.153:8080/group1/M00/00/00/rBImOlxydpeAbhPiAACXU23bgaU822.jpg"/></a>
+            <a href="#!name"><span class="white-text name"></span></a>
+            <a href="#!email"><span class="white-text email"></span></a>
+        </div>
+    </li>
+    <li>
+        <a href="/articles"><i class="material-icons">cloud</i>文章列表</a>
+    </li>
+    <li>
+        <a href="/postArticle">发布文章</a>
+    </li>
+    <li>
+        <div class="divider"></div>
+    </li>
+    <li>
+        <a class="subheader">个人中心</a>
+    </li>
+    <li id="logout">
+        <a class="waves-effect">退出</a>
+    </li>
+</ul>
+</div>
+
+<!--选项按钮-->
+<div th:fragment="floating">
+<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+    <a class="btn-floating btn-large teal">
+        <i class="material-icons">mode_edit</i>
+    </a>
+    <ul>
+        <li><a class="btn-floating to_write red" style="transform: scaleY(0.4) scaleX(0.4) translateY(40px) translateX(0px); opacity: 0;"><i class="material-icons">mode_edit</i></a></li>
+        <li><a class="btn-floating to_list yellow darken-1" style="transform: scaleY(0.4) scaleX(0.4) translateY(40px) translateX(0px); opacity: 0;"><i class="material-icons">clear_all</i></a></li>
+        <li><a class="btn-floating to_top green" style="transform: scaleY(0.4) scaleX(0.4) translateY(40px) translateX(0px); opacity: 0;"><i class="material-icons">publish</i></a></li>
+        <li><a class="btn-floating to_home blue" style="transform: scaleY(0.4) scaleX(0.4) translateY(40px) translateX(0px); opacity: 0;"><i class="material-icons">attach_file</i></a></li>
+    </ul>
+</div>
+</div>
+
 <!--页脚-->
 <div th:fragment="foot">
     <footer class="page-footer teal">
@@ -75,12 +121,6 @@
                         </li>
                     </ul>
                 </div>
-            </div>
-        </div>
-        <div class="footer-copyright">
-            <div class="container">
-                Made by
-                <a class="brown-text text-lighten-3" href="http://materializecss.com">Materialize</a>
             </div>
         </div>
     </footer>

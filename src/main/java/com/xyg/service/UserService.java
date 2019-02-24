@@ -2,6 +2,8 @@ package com.xyg.service;
 
 import com.xyg.domain.User;
 
+import java.util.List;
+
 /**
  * 用户操作Service
  */
@@ -27,4 +29,27 @@ public interface UserService {
      * @return
      */
     User getUserByToken(String token);
+
+    /**
+     * 用户注册
+     * @param user
+     * @return
+     */
+    User userRegister(User user);
+
+    /**
+     * 通过电话查询出用户
+     *
+     * @param mobileNo
+     * @return
+     */
+    List<User> findUserByMobileNo(String mobileNo)  ;
+
+    /**
+     * 通过昵称判断该用户是否存在
+     *
+     * @param userNickName
+     * @return
+     */
+    List<User> findUserByUserNickName(String userNickName)  ;
 }

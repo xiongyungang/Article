@@ -14,46 +14,9 @@
 <div th:replace="common::head"></div>
 
 <!--侧边导航-->
-<ul id="slide-out" class="side-nav">
-    <li>
-        <div class="userView">
-            <div class="background">
-                <img src="images/office.jpg"/>
-            </div>
-            <a href="#!user"><img class="circle" src="images/yuna.jpg"/></a>
-            <a href="#!name"><span class="white-text name">张三</span></a>
-            <a href="#!email"><span class="white-text email">jdandturk@sina.com</span></a>
-        </div>
-    </li>
-    <li>
-        <a href="/articles"><i class="material-icons">cloud</i>文章列表</a>
-    </li>
-    <li>
-        <a href="/postArticle">发布文章</a>
-    </li>
-    <li>
-        <div class="divider"></div>
-    </li>
-    <li>
-        <a class="subheader">个人中心</a>
-    </li>
-    <li id="logout">
-        <a class="waves-effect">退出</a>
-    </li>
-</ul>
+<div th:replace="common::left"></div>
 
 <div class="container">
-    <!--分类标签-->
-    <!--<div class="row">-->
-        <!--<br/><br/>-->
-        <!--<div class="col s12">-->
-            <!--<ul class="tabs">-->
-                <!--<li class="tab"><a href="/articles">所有文章</a></li>-->
-                <!--<li class="tab" th:each="category:${categorys}"><a href="#" th:text="${category.categoryName}">分类名称</a>-->
-                <!--</li>-->
-            <!--</ul>-->
-        <!--</div>-->
-    <!--</div>-->
     <br/><br/>
     <a class="btn-flat grey" href="/articles">所有</a>
     <a th:class="'btn-flat cate '+${category?.color}" th:each="category:${categorys}" th:text="${category.categoryName}">分类</a>
@@ -90,6 +53,9 @@
         </span>
     </ul>
 </div>
+
+<!--全局选项按钮-->
+<div th:replace="common::floating"></div>
 
 <!--页脚-->
 <div th:replace="common::foot"></div>

@@ -39,7 +39,7 @@ public class PageController {
         //获取分类
         List<Category> categories = categoryService.getAll();
         model.addAttribute("categorys", categories);
-        return "/editArticle";
+        return "editArticle";
     }
 
     /**
@@ -69,7 +69,7 @@ public class PageController {
             model.addAttribute("article", article);
             model.addAttribute("comments", comments);
         }
-        return "/detailArticle";
+        return "detailArticle";
     }
 
     /**
@@ -89,7 +89,7 @@ public class PageController {
         List<Category> categories = categoryService.getAll();
         model.addAttribute("categorys", categories);
         model.addAttribute("article", article);
-        return "/editArticle";
+        return "editArticle";
     }
 
     /**
@@ -98,7 +98,7 @@ public class PageController {
      */
     @GetMapping(value = "/personal")
     public String personal() {
-        return "/personal";
+        return "personal";
     }
 
 }

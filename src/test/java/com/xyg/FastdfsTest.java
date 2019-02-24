@@ -13,7 +13,7 @@ public class FastdfsTest {
     @Test
     public void testFastDfsClient() throws Exception {
         FastDFSClient fastDFSClient = new FastDFSClient("E:\\fdfs.conf");
-        String file = fastDFSClient.uploadFile("E:\\download.jpg");
+        String file = fastDFSClient.uploadFile("E:\\background3.jpg");
         System.out.println(file);
     }
 }

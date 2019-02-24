@@ -54,7 +54,7 @@ public class ArticleController {
         model.addAttribute("articles", articles);
         model.addAttribute("categorys", categorys);
         model.addAttribute("current",tag);
-        return "/article";
+        return "article";
     }
 
     /**
