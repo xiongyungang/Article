@@ -34,16 +34,8 @@ public class FavoriteServiceImpl implements FavoriteService {
      * @return
      */
     @Override
-    public Page<Favorite> getFavoriteByUser(User user,Integer start) {
-        start = start<0?0:start;
-        Integer size = PAGE_SIZE;
-
-        //排序和分页
-        Sort.Order order = new Sort.Order(Sort.Direction.DESC, "createTime");
-        Sort sort = new Sort(order);
-        Pageable pageable = new PageRequest(start, size, sort);
-
-        return favoriteRepository.findAll(pageable);
+    public List<Favorite> getFavoriteByUser(User user,Integer start) {
+        return favoriteRepository.findFavoriteByUserOrderByCreateTimeDesc(user);
     }
 
     /**

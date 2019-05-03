@@ -45,12 +45,30 @@
 <div class="container">
 
     <div class="row">
+        <!--标签-->
         <div class="col s12">
             <ul class="tabs">
-                <li class="tab col s3"><a class="active" href="#test2">个人信息</a></li>
-                <li class="tab col s3"><a href="#test4">收藏文章</a></li>
-                <li class="tab col s3"><a href="#test1">我的文章</a></li>
+                <li class="tab col s3"><a target="_self" href="/personal?v=1">个人信息</a></li>
+                <li class="tab col s3"><a target="_self" href="/personal?v=2">收藏文章</a></li>
+                <li class="tab col s3"><a target="_self" class="active" href="/personal?v=3">我的文章</a></li>
+                <li class="tab col s3"><a target="_self" href="/personal?v=4">我的相册</a></li>
             </ul>
+        </div>
+        <br/><br/><br/><br/>
+        <!--内容块-->
+        <div style="min-height: 500px;height:auto !important;height:500px;">
+            <!--文章列表-->
+            <div class="row" th:each="article:${articles}">
+                <div class="card hoverable grey lighten-4" th:onclick="'javascript:openBox(\''+${article.articleId}+'\')'">
+                    <div class="card-content">
+                <span class="card-title activator grey-text text-darken-4">
+                    <span class=" grey-text text-darken-4" th:text="${article.title}">文章标题</span>
+                    <!--<i class="material-icons right">more_vert</i>-->
+                </span>
+                        <p th:text="${#strings.abbreviate(article.content,50)}">文章内容</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -66,6 +84,11 @@
 <script type="text/javascript" src="/js/common.js"></script>
 <script>
     $('ul.tabs').tabs();
+
+    //点击文章卡片跳转详细页面
+    function openBox(id) {
+        window.location.href="/article/details/"+id;
+    }
 </script>
 
 </body>

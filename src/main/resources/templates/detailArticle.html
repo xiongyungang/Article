@@ -35,6 +35,11 @@
                 <p class="flow-text" th:utext="${article?.contentHtml}">
                 </p>
             </div>
+            <!--日期时间-->
+            <div>
+                <span>发布于</span>
+                <span th:text="${#dates.format(article?.createTime,'yyyy-MM-dd HH:mm')}"></span>
+            </div>
             <!--编辑删除-->
             <div th:hidden="${status}" class="right-align">
                 <a th:href="'/edit/'+${article?.articleId}" class="grey-text text-lighten-1">编辑文章</a>
@@ -46,7 +51,9 @@
 
         <!--评论列表-->
         <h4>评论</h4>
+
         <ul class="collection" th:each="comment:${comments}">
+
             <li class="collection-item avatar">
                 <i class="material-icons circle green">
                     android</i>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>个人中心</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link href="https://cdn.bootcss.com/materialize/0.97.8/css/materialize.min.css" rel="stylesheet"/>
+</head>
+<body>
+<!--导航栏-->
+<div th:replace="common::head"></div>
+
+<!--侧边导航-->
+<ul id="slide-out" class="side-nav">
+    <li>
+        <div class="userView">
+            <div class="background">
+                <img src="images/office.jpg"/>
+            </div>
+            <a href="#!user"><img class="circle" src="images/yuna.jpg"/></a>
+            <a href="#!name"><span class="white-text name">张三</span></a>
+            <a href="#!email"><span class="white-text email">jdandturk@sina.com</span></a>
+        </div>
+    </li>
+    <li>
+        <a href="/articles"><i class="material-icons">cloud</i>文章列表</a>
+    </li>
+    <li>
+        <a href="/postArticle">发布文章</a>
+    </li>
+    <li>
+        <div class="divider"></div>
+    </li>
+    <li>
+        <a class="subheader">个人中心</a>
+    </li>
+    <li id="logout">
+        <a class="waves-effect">退出</a>
+    </li>
+</ul>
+<br/><br/>
+<div class="container">
+
+    <div class="row">
+        <!--标签-->
+        <div class="col s12">
+            <ul class="tabs">
+                <li class="tab col s3"><a target="_self" href="/personal?v=1">个人信息</a></li>
+                <li class="tab col s3"><a target="_self" class="active" href="/personal?v=2">收藏文章</a></li>
+                <li class="tab col s3"><a target="_self" href="/personal?v=3">我的文章</a></li>
+                <li class="tab col s3"><a target="_self" href="/personal?v=4">我的相册</a></li>
+            </ul>
+        </div>
+        <!--内容块-->
+        <div style="min-height: 500px;height:auto !important;height:500px;">
+            <br/><br/><br/><br/>
+            <!--文章列表-->
+            <div class="row" th:each="article:${articles}">
+                <div class="card hoverable grey lighten-4" th:onclick="'javascript:openBox(\''+${article.articleId}+'\')'">
+                    <div class="card-content">
+                <span class="card-title activator grey-text text-darken-4">
+                    <span class=" grey-text text-darken-4" th:text="${article.title}">文章标题</span>
+                    <!--<i class="material-icons right">more_vert</i>-->
+                </span>
+                        <p th:text="${#strings.abbreviate(article.content,50)}">文章内容</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--页脚-->
+<div th:replace="common::foot"></div>
+
+<!--jQuery-->
+<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/materialize/0.97.8/js/materialize.min.js"></script>
+
+<!--通用js-->
+<script type="text/javascript" src="/js/common.js"></script>
+<script>
+    $('ul.tabs').tabs();
+
+    //点击文章卡片跳转详细页面
+    function openBox(id) {
+        window.location.href="/article/details/"+id;
+    }
+</script>
+
+</body>
+</html>

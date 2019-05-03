@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>我的相册-个人中心</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link href="https://cdn.bootcss.com/materialize/0.97.8/css/materialize.min.css" rel="stylesheet"/>
+    <link href="css/default.css" rel="stylesheet"/>
+</head>
+<body>
+<!--导航栏-->
+<div th:replace="common::head"></div>
+
+<!--侧边导航-->
+<ul id="slide-out" class="side-nav">
+    <li>
+        <div class="userView">
+            <div class="background">
+                <img src="images/office.jpg"/>
+            </div>
+            <a href="#!user"><img class="circle" src="images/yuna.jpg"/></a>
+            <a href="#!name"><span class="white-text name">张三</span></a>
+            <a href="#!email"><span class="white-text email">jdandturk@sina.com</span></a>
+        </div>
+    </li>
+    <li>
+        <a href="/articles"><i class="material-icons">cloud</i>文章列表</a>
+    </li>
+    <li>
+        <a href="/postArticle">发布文章</a>
+    </li>
+    <li>
+        <div class="divider"></div>
+    </li>
+    <li>
+        <a class="subheader">个人中心</a>
+    </li>
+    <li id="logout">
+        <a class="waves-effect">退出</a>
+    </li>
+</ul>
+<br/><br/>
+<div class="container">
+
+    <div class="row">
+        <!--标签-->
+        <div class="col s12">
+            <ul class="tabs">
+                <li class="tab col s3"><a target="_self" href="/personal?v=1">个人信息</a><div style="position: absolute; z-index: 10"></div></li>
+                <li class="tab col s3"><a target="_self" href="/personal?v=2">收藏文章</a></li>
+                <li class="tab col s3"><a target="_self" href="/personal?v=3">我的文章</a></li>
+                <li class="tab col s3"><a target="_self" class="active" href="/personal?v=4">我的相册</a></li>
+            </ul>
+        </div>
+        <!--内容块-->
+        <div style="min-height: 500px;height:auto !important;height:500px;">
+            <br/><br/><br/><br/>
+            <ul class="collapsible popout" data-collapsible="accordion">
+                <li>
+                    <div class="collapsible-header active"><i class="material-icons">whatshot</i>上传图片</div>
+                    <div class="collapsible-body person">
+                        <div class="row">
+                            <form id="pictureInfo" enctype='multipart/form-data'>
+                                    <div class="file-field input-field">
+                                        <div class="btn">
+                                            <span>选择图片</span>
+                                            <input type="file" name="file" accept="image/*" />
+                                        </div>
+                                        <div class="file-path-wrapper">
+                                            <input class="file-path validate" type="text" placeholder="jpg/png/gif/bmp"/>
+                                        </div>
+                                    </div>
+                            </form>
+                            <button class="btn waves-effect waves-light right send" type="submit" name="action">点击上传
+                                <i class="material-icons right">send</i>
+                            </button>
+                        </div>
+
+                    </div>
+                </li>
+            </ul>
+            <hr/><br/>
+
+            <!--图像卡片-->
+            <div class="row">
+                <div class="col s3" th:each="picture:${pictures}">
+                    <div class="card">
+                        <div class="card-image">
+                            <img th:src="${picture.path}" id="all-img"/>
+                            <span class="card-title" th:text="${#dates.format(picture.createTime,'yyyy-MM-dd')}">Card Title</span>
+                            <input type="hidden" th:value="${picture.id}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 图片详细 -->
+<div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <h4>图片详细</h4>
+        <img id="pic-path" src="http://120.78.88.153:8080/group1/M00/00/00/rBImOlzL746AWiKUAAJkW8iJBVE608.jpg">
+        <h5 id="pic-data">2019/5/18</h5>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">取消</a>
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat red white-text">删除</a>
+    </div>
+</div>
+
+
+<!--页脚-->
+<div th:replace="common::foot"></div>
+
+<!--jQuery-->
+<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/materialize/0.97.8/js/materialize.min.js"></script>
+
+<!--通用js-->
+<script type="text/javascript" src="/js/common.js"></script>
+<script>
+    $('ul.tabs').tabs();
+
+    //上传图片
+    $('.send').click(function () {
+        $.ajax({
+            url: "/uploadPicture",
+            type: 'POST',
+            cache: false,
+            data: new FormData($('#pictureInfo')[0]),
+            processData: false,
+            contentType: false,
+            dataType:"json",
+            success : function(result) {
+                if (result && result['status']==200) {
+                    window.location.reload();
+                    Materialize.toast('图片上传成功！', 4000);
+                } else {
+                    Materialize.toast(result['msg'], 4000);
+                }
+            }
+        });
+    });
+    var picId;
+    //图片详细
+    $(".card-image").click(function () {
+        var path = ($(this).children('img').attr("src"));
+        var data = "图片上传于："+$(this).children("span").text();
+        picId=$(this).children("input").val();
+        $("#pic-path").attr("src",path);
+        $("#pic-data").text(data);
+        $('#modal1').modal('open');
+
+    });
+
+    //模态配置
+    $('.modal').modal({
+            dismissible: true, // Modal can be dismissed by clicking outside of the modal
+            opacity: .10, // Opacity of modal background
+            in_duration: 300, // Transition in duration
+            out_duration: 200, // Transition out duration
+            starting_top: '4%', // Starting top style attribute
+            ending_top: '10%' // Ending top style attribute
+        }
+    );
+
+    //删除按钮
+    $(".white-text").click(function () {
+        $.ajax({
+            url:"/user/delete/pic",
+            type:"post",
+            dataType:"json",
+            data:{
+                "id": picId,
+                _method:"DELETE"
+            },
+            success:function (result) {
+                if(result&&result['status']==200) {
+                    window.location.reload();
+                }else {
+                    window.location.reload();
+                }
+            }
+        });
+    })
+</script>
+
+</body>
+</html>

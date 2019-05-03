@@ -104,4 +104,24 @@ public class ArticleServiceImpl implements ArticleService {
     public List<Article> findArticleByTime(User user, Date start,Date end) {
         return articleRepository.findArticleByUserAndCreateTimeBetweenOrderByCreateTimeDesc(user,start,end);
     }
+
+    @Override
+    public Page<Article> pageUserSort(User user,Integer start) {
+        Page<Article> articles = null;
+        start = start<0?0:start;
+        Integer size = PAGE_SIZE;
+
+        Sort.Order order = new Sort.Order(Sort.Direction.ASC, "articleId");
+        Sort sort = new Sort(order);
+        Pageable pageable = new PageRequest(start, size, sort);
+
+        Specification<Article> specification = new Specification<Article>() {
+            @Override
+            public Predicate toPredicate(Root<Article> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                Path path = root.get("user");
+                return criteriaBuilder.equal(path, user);
+            }
+        };
+        return articleRepository.findAll(specification,pageable);
+    }
 }

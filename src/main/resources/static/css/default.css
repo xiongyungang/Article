@@ -10,6 +10,19 @@
 .parallax-container .section {
     width: 100%;
 }
+/*头像框*/
+.person .person-hp{
+    border-radius:100px;
+    width:200px;
+    height: 200px;
+    border: solid 5px #4db6ac;
+}
+.person{
+    margin:20px;
+}
+#all-img{
+    height: 200px;
+}
 
 @media only screen and (max-width : 992px) {
     .parallax-container .section {

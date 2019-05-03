@@ -43,7 +43,7 @@ public interface UserService {
      * @param mobileNo
      * @return
      */
-    List<User> findUserByMobileNo(String mobileNo)  ;
+    List<User> findUserByMobileNo(String mobileNo);
 
     /**
      * 通过昵称判断该用户是否存在
@@ -51,5 +51,12 @@ public interface UserService {
      * @param userNickName
      * @return
      */
-    List<User> findUserByUserNickName(String userNickName)  ;
+    List<User> findUserByUserNickName(String userNickName);
+
+    /**
+     * 根据用户名获取用户
+     * @param userName
+     * @return
+     */
+    List<User> findUserByUserName(String userName);
 }

@@ -75,4 +75,6 @@ public interface ArticleService {
      * @return
      */
     public List<Article> findArticleByTime(User user, Date start, Date end);
+
+    public Page<Article> pageUserSort(User user,Integer start);
 }

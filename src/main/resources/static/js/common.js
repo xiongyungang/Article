@@ -61,7 +61,8 @@ var Cookie = {
     }
 };
 
+//选项按钮
 $('.to_top').click(function(){$('html,body').animate({scrollTop: '0px'}, 800);});
-$('.to_home').click(function(){location.href = "/";});
+$('.to_personal').click(function(){location.href = "/personal";});
 $('.to_list').click(function(){location.href="/articles"});
 $('.to_write').click(function(){location.href="/postArticle"});

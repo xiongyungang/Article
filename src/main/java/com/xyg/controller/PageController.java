@@ -1,19 +1,18 @@
 package com.xyg.controller;
 
-import com.xyg.domain.Article;
-import com.xyg.domain.Category;
-import com.xyg.domain.Comment;
-import com.xyg.domain.User;
-import com.xyg.service.ArticleService;
-import com.xyg.service.CategoryService;
-import com.xyg.service.CommentService;
+import com.xyg.domain.*;
+import com.xyg.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -27,6 +26,10 @@ public class PageController {
     private CategoryService categoryService;
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private FavoriteService favoriteService;
+    @Autowired
+    private PictureService pictureService;
 
     /**
      * 跳转发布文章页面
@@ -97,8 +100,39 @@ public class PageController {
      * @return
      */
     @GetMapping(value = "/personal")
-    public String personal() {
-        return "personal";
+    public String personal(@RequestParam(name="v" ,defaultValue = "1") String count,Model model,HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        switch (count)
+        {
+            case "1":
+                model.addAttribute("user", user);
+                return "personal"+count;
+            case "2":
+                //todo:分页、优化
+                List<Favorite> favorites = favoriteService.getFavoriteByUser(user, 5);
+                ArrayList<Article> articleList = new ArrayList();
+                for (Favorite favorite :
+                        favorites) {
+                    Article article = favorite.getArticle();
+                    Article articleById = articleService.findArticleById(article.getArticleId());
+                    articleList.add(articleById);
+                }
+                model.addAttribute("articles", articleList);
+                return "personal"+count;
+            case "3":
+                //todo:分页
+                List<Article> articles = articleService.findArticleByUser(user);
+                model.addAttribute("articles", articles);
+                return "personal"+count;
+            case "4":
+                List<Picture> pictures = pictureService.getPictureByUser(user);
+                Collections.reverse(pictures);
+                model.addAttribute("pictures",pictures);
+                return "personal"+count;
+            default:
+                model.addAttribute("user", user);
+                return "personal"+count;
+        }
     }
 
 }

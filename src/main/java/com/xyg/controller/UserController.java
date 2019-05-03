@@ -1,23 +1,30 @@
 package com.xyg.controller;
 
+import com.sun.org.apache.regexp.internal.RE;
+import com.xyg.domain.Picture;
 import com.xyg.domain.User;
+import com.xyg.service.PictureService;
 import com.xyg.service.UserService;
 import com.xyg.utils.CookieUtil;
+import com.xyg.utils.FastDFSClient;
 import com.xyg.utils.Result;
 import com.xyg.utils.WebUtils;
 import com.xyg.utils.note.SendSmsDemo;
 import com.xyg.utils.vcode.Captcha;
 import com.xyg.utils.vcode.GifCaptcha;
-import org.omg.CORBA.UserException;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.SessionException;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -33,9 +40,15 @@ import java.util.List;
  * 用户Controller
  */
 @RestController
+@PropertySource("classpath:conf/conf.properties")
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private PictureService pictureService;
+
+    @Value("${IMAGE_SERVER_URL}")
+    private String IMAGE_SERVER_URL;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -155,6 +168,11 @@ public class UserController {
      */
     @PostMapping(value = "/user/session", produces = {"application/json;charset=UTF-8"})
     public Result login(String mobileNo, String password, String inputCaptcha, HttpSession session, HttpServletResponse response) {
+        //1.获取subject
+        Subject subject = SecurityUtils.getSubject();
+        //2.封装用户数据
+        UsernamePasswordToken token = new UsernamePasswordToken(mobileNo,password);
+
         //判断验证码
         if (WebUtils.validateCaptcha(inputCaptcha, "captcha", session)) {
             //判断用户及密码
@@ -168,6 +186,8 @@ public class UserController {
                 //保存session和cookie
                 session.setAttribute("user",uploadUser);
                 CookieUtil.addCookie(response, "loginToken", loginToken, 604800);
+
+                subject.login(token);
                 return Result.success(uploadUser);
             } else {
                 return Result.error("账号密码错误");
@@ -186,9 +206,85 @@ public class UserController {
      */
     @DeleteMapping(value = "/session",produces = {"application/json;charset=UTF-8"})
     public Result logout(HttpSession session,HttpServletRequest request,HttpServletResponse response) {
+        //1.获取subject
+        Subject subject = SecurityUtils.getSubject();
         //清除session和Cookie
         session.removeAttribute("user");
         CookieUtil.clearCookie(request, response, "loginToken");
+        try {
+
+            subject.logout();
+
+        } catch (SessionException ise) {
+
+            ise.printStackTrace();
+
+        }
+
+        return Result.success();
+    }
+
+    /**
+     * 图片上传
+     * @return
+     */
+    @PostMapping(value = {"/uploadPicture","/uploadHead"})
+    public Result uploadHeadPortrait(HttpSession session,@RequestParam("file") MultipartFile file,HttpServletRequest request){
+        User user = (User)session.getAttribute("user");
+        if(null == user){
+            return Result.error("no user");
+        }
+        if (file.getOriginalFilename().isEmpty()){
+            return Result.error("file name error");
+        }
+        try {
+            FastDFSClient fastDFSClient = new FastDFSClient("classpath:conf/fdfs.conf");
+            //获取文件名
+            String originalFilename = file.getOriginalFilename();
+            //获取文件后缀名
+            String extName = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
+            //拼接图片服务器路径
+            String filename = IMAGE_SERVER_URL + fastDFSClient.uploadFile(file.getBytes(), extName);
+
+            //获取请求路径
+            String url = request.getRequestURI().trim();
+            if(url.equals("/uploadPicture")){
+                //保存相册
+                Picture picture = new Picture();
+                picture.setUser(user);
+                picture.setCreateTime(new Date());
+                picture.setPath(filename);
+                pictureService.save(picture);
+                return Result.success(filename);
+            }else if(url.equals("/uploadHead")){
+                //保存用户头像
+                user.setHeadPortrait(filename);
+                userService.upload(user);
+                return Result.success(filename);
+            }
+            return Result.error("url error");
+        }catch (Exception e){
+            e.printStackTrace();
+            return Result.error("picture upload failed");
+        }
+    }
+
+    @PostMapping(value = "/user/update",produces = {"application/json;charset=UTF-8"})
+    public Result updateUser(HttpSession session,String mobileNo,String email,String username) {
+        //todo:聚合方式会将其他选项也一并更新
+        //todo:有效性检查
+        User user = (User)session.getAttribute("user");
+        user.setPhone(mobileNo);
+        user.setEmail(email);
+        user.setUserName(username);
+        userService.upload(user);
+
+        return Result.success();
+    }
+
+    @DeleteMapping("/user/delete/pic")
+    public Result deletePic(Integer id) {
+        pictureService.delete(id);
         return Result.success();
     }
 }

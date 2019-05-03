@@ -3,23 +3,23 @@ server:
 spring:
      datasource:
        username: root
-       password: root
+       password: admin
        #password: root
        driver-class-name: com.mysql.jdbc.Driver
-       #url: jdbc:mysql://127.0.0.1:3306/wenku?characterEncoding=UTF-8
-       url: jdbc:mysql://120.78.88.153:3306/wenku?characterEncoding=UTF-8
+       url: jdbc:mysql://127.0.0.1:3306/wenku?characterEncoding=UTF-8
+       #url: jdbc:mysql://120.78.88.153:3306/wenku?characterEncoding=UTF-8
      jpa:
        hibernate:
          ddl-auto: update
          naming:
            strategy: org.hibernate.cfg.ImprovedNamingStrategy
-       show-sql: true
+       show-sql: false
        #FormatSql
        properties:
          hibernate:
-          format_sql: true
+          format_sql: false
      thymeleaf:
-       mode: HTML5
+       mode: LEGACYHTML5
        prefix: classpath:/templates/
        suffix: .html
        encoding: UTF-8

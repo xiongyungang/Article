@@ -14,11 +14,11 @@ public interface UserRepository extends JpaRepository<User, Integer> {
      * 通过电话查询出用户
      *
      */
-    List<User> findUserByPhone(String phone)  ;
+    List<User> findUserByPhone(String phone);
 
     /**
      * 通过昵称判断该用户是否存在
      *
      */
-    List<User> findUserByUserName(String userName)  ;
+    List<User> findUserByUserName(String userName);
 }

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>个人中心</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link href="https://cdn.bootcss.com/materialize/0.97.8/css/materialize.min.css" rel="stylesheet"/>
+    <link href="css/default.css" rel="stylesheet"/>
+</head>
+<body>
+<!--导航栏-->
+<div th:replace="common::head"></div>
+
+<!--侧边导航-->
+<ul id="slide-out" class="side-nav">
+    <li>
+        <div class="userView">
+            <div class="background">
+                <img src="images/office.jpg"/>
+            </div>
+            <a href="#!user"><img class="circle" src="images/yuna.jpg"/></a>
+            <a href="#!name"><span class="white-text name">张三</span></a>
+            <a href="#!email"><span class="white-text email">jdandturk@sina.com</span></a>
+        </div>
+    </li>
+    <li>
+        <a href="/articles"><i class="material-icons">cloud</i>文章列表</a>
+    </li>
+    <li>
+        <a href="/postArticle">发布文章</a>
+    </li>
+    <li>
+        <div class="divider"></div>
+    </li>
+    <li>
+        <a class="subheader">个人中心</a>
+    </li>
+    <li id="logout">
+        <a class="waves-effect">退出</a>
+    </li>
+</ul>
+<br/><br/>
+<div class="container">
+
+    <div class="row">
+        <!--标签-->
+        <div class="col s12">
+            <ul class="tabs">
+                <li class="tab col s3"><a target="_self" class="active" href="/personal?v=1">个人信息</a></li>
+                <li class="tab col s3"><a target="_self" href="/personal?v=2">收藏文章</a></li>
+                <li class="tab col s3"><a target="_self" href="/personal?v=3">我的文章</a></li>
+                <li class="tab col s3"><a target="_self" href="/personal?v=4">我的相册</a></li>
+            </ul>
+        </div>
+
+        <br/><br/><br/><br/>
+        <!--内容块-->
+        <div style="min-height: 500px;height:auto !important;height:500px;">
+            <ul class="collapsible popout" data-collapsible="accordion">
+                <li>
+                    <div class="collapsible-header active"><i class="material-icons">whatshot</i>头像</div>
+                    <div class="collapsible-body person">
+                        <div class="row">
+                            <div class="col s6"><img class="materialboxed circle responsive-img person-hp" th:src="${user.headPortrait}" /></div>
+                            <div class="col s6">
+                                <form id="headInfo" enctype='multipart/form-data'>
+                                    <div class="file-field input-field">
+                                        <div class="btn">
+                                            <span>选择图片</span>
+                                            <input type="file" name="file" accept="image/*" />
+                                        </div>
+                                        <div class="file-path-wrapper">
+                                            <input class="file-path validate" type="text" placeholder="jpg/png/gif/bmp"/>
+                                        </div>
+                                    </div>
+                                </form>
+                                <button class="btn waves-effect waves-light right send-head" name="action">更换头像
+                                    <i class="material-icons right">send</i>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>用户名</div>
+                    <div class="collapsible-body">
+                        <br/>
+                        <div class="input-field col s10">
+                            <input id="username" type="text" class="validate" th:value="${user.userName}">
+                            <label for="username" data-error="wrong" data-success="right">请输入用户名：</label>
+                        </div>
+                        <br/>
+                        <button class="btn waves-effect waves-light col s2 send" type="submit" name="action">确定
+                            <i class="material-icons right">send</i>
+                        </button>
+                        <br/><br/><br/><br/>
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">place</i>email</div>
+                    <div class="collapsible-body">
+                        <br/>
+                        <div class="input-field col s10">
+                            <input id="email" type="email" class="validate" th:value="${user.email}">
+                            <label for="email" data-error="wrong" data-success="right">请输入电子邮箱：</label>
+                        </div>
+                        <br/>
+                        <button class="btn waves-effect waves-light col s2 send" type="submit" name="action">确定
+                            <i class="material-icons right">send</i>
+                        </button>
+                        <br/><br/><br/><br/>
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">whatshot</i>手机号</div>
+                    <div class="collapsible-body">
+                        <br/>
+                        <div class="input-field col s10">
+                            <input id="mobileNo" type="tel" class="validate" th:value="${user.phone}">
+                            <label for="mobileNo" data-error="wrong" data-success="right">请输入手机号：</label>
+                        </div>
+                        <br/>
+                        <button class="btn waves-effect waves-light col s2 send" type="submit" name="action">确定
+                            <i class="material-icons right">send</i>
+                        </button>
+                        <br/><br/><br/><br/>
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">whatshot</i>注册时间</div>
+                    <div class="collapsible-body"><br/><p th:text="'当前用户注册于:   '+${#dates.format(user.registerTime,'yyyy-MM-dd HH:mm')}"></p><br/></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!--页脚-->
+<div th:replace="common::foot"></div>
+
+<!--jQuery-->
+<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/materialize/0.97.8/js/materialize.min.js"></script>
+
+<!--通用js-->
+<script type="text/javascript" src="/js/common.js"></script>
+<script>
+    $('ul.tabs').tabs();
+
+    //折叠初始化
+    $('.collapsible').collapsible();
+
+    //上传图片
+    $('.send-head').click(function () {
+        $.ajax({
+            url: "/uploadHead",
+            type: 'POST',
+            cache: false,
+            data: new FormData($('#headInfo')[0]),
+            processData: false,
+            contentType: false,
+            dataType:"json",
+            success : function(result) {
+                if (result && result['status']==200) {
+                    $(".person-hp").attr("src",result['data']);
+                    Materialize.toast('头像更新成功！', 4000);
+                } else {
+                    Materialize.toast(result['msg'], 4000);
+                }
+            }
+        });
+    })
+
+    //更新用户
+    $('.send').click(function () {
+        $.ajax({
+            url: "/user/update",
+            type: 'POST',
+            data:{
+                "username":$("#username").val(),
+                "mobileNo":$("#mobileNo").val(),
+                "email":$("#email").val()
+            },
+            dataType:"json",
+            success : function(result) {
+                if (result && result['status']==200) {
+                    Materialize.toast('用户名更新成功！', 4000);
+                    window.location.reload();
+                } else {
+                    Materialize.toast(result['msg'], 4000);
+                }
+            }
+        });
+    })
+
+</script>
+
+</body>
+</html>
