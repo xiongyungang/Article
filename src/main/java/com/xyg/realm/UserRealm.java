@@ -1,4 +1,4 @@
-package com.xyg.interceptor;
+package com.xyg.realm;
 
 import com.xyg.domain.User;
 import com.xyg.service.UserService;

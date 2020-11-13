@@ -40,6 +40,7 @@ public class CommentController {
 
         //补全信息
         comment.setCreateTime(new Date());
+        
         User user = (User) session.getAttribute("user");
         comment.setUserName(user.getUserName());
         comment.setUser(user);

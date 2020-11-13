@@ -4,7 +4,7 @@ $("#button-collapse").sideNav();
 //退出
 $("#logout").click(function () {
     $.ajax({
-        url:"/session",
+        url:"/user/logout",
         type:"post",
         dataType:"json",
         data:{

@@ -1,15 +1,23 @@
-package com.xyg.interceptor;
+package com.xyg.config;
+
+import com.xyg.filter.UserFilter;
+import com.xyg.realm.UserRealm;
 
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.filter.authc.AnonymousFilter;
+import org.apache.shiro.web.filter.authc.LogoutFilter;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.servlet.Filter;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 @Configuration
 public class ShiroConfig {
+
     @Bean
     public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier("securityManager")DefaultWebSecurityManager securityManager){
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
@@ -24,9 +32,16 @@ public class ShiroConfig {
 		 * 		perms:该资源必须得到资源权限才可以访问
 		 * 		roles:该资源必须得到角色权限才可以访问
 		 */
-        LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<String,String>();
+        LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
+        Map<String, Filter> filters = new LinkedHashMap<>();
+        filters.put("anon", new AnonymousFilter());
+        filters.put("logout", new LogoutFilter());
+        filters.put("user", new UserFilter());
+        shiroFilterFactoryBean.setFilters(filters);
+
         filterChainDefinitionMap.put("/", "anon");
 		filterChainDefinitionMap.put("/article/**", "anon");
+		filterChainDefinitionMap.put("/favorite/**", "anon");  //未登陆被过滤器拦截问题
 		filterChainDefinitionMap.put("/articles/**","anon");
 		filterChainDefinitionMap.put("/css/**","anon");
 		filterChainDefinitionMap.put("/js/**","anon");
@@ -37,17 +52,11 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/error/**","anon");
 		filterChainDefinitionMap.put("/findOne","anon");
 
-        filterChainDefinitionMap.put("/**","authc");
-//        //添加授权访问
-//        filterChainDefinitionMap.put("/add","perms[user:add]");
-//        filterChainDefinitionMap.put("/update","perms[user:update]");
-//        filterChainDefinitionMap.put("/*", "authc");
-//
+        filterChainDefinitionMap.put("/**","user");
+
         //修改跳转页面
         shiroFilterFactoryBean.setLoginUrl("/login.html");
-//        //自定义授权页面
-//        shiroFilterFactoryBean.setUnauthorizedUrl("/unAuth");
-//
+
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 
         return shiroFilterFactoryBean;

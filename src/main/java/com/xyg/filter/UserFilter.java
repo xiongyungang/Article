@@ -1,25 +1,28 @@
-package com.xyg.interceptor;
+package com.xyg.filter;
 
 import com.xyg.domain.User;
 import com.xyg.service.UserService;
 import com.xyg.utils.CookieUtil;
+import com.xyg.utils.SpringContextUtil;
 import com.xyg.utils.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
+import org.apache.shiro.web.filter.AccessControlFilter;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * 实现自动登陆
- */
-public class UserInterceptor implements HandlerInterceptor {
-    @Autowired
-    private UserService userService;
+public class UserFilter extends AccessControlFilter {
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
+    protected boolean isAccessAllowed(ServletRequest servletRequest, ServletResponse servletResponse, Object o) throws Exception {
+        return false;
+    }
+
+    @Override
+    protected boolean onAccessDenied(ServletRequest servletRequest, ServletResponse servletResponse) throws Exception {
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
         //获取用户
         User sessionUser = (User) request.getSession().getAttribute("user");
         if (sessionUser != null) {
@@ -30,6 +33,7 @@ public class UserInterceptor implements HandlerInterceptor {
             String loginToken = CookieUtil.findCookieByName(request, "loginToken");
             if (StringUtils.isNotBlank(loginToken)) {
                 //根据token找用户
+                UserService userService = (UserService)SpringContextUtil.getBean(UserService.class);
                 User userByToken = userService.getUserByToken(loginToken);
                 if (userByToken != null) {
                     //有对应token的用户，保存到session，放行
@@ -52,15 +56,5 @@ public class UserInterceptor implements HandlerInterceptor {
                 return false;
             }
         }
-    }
-
-    @Override
-    public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
-
-    }
-
-    @Override
-    public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
-
     }
 }

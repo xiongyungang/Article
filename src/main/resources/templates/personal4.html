@@ -129,7 +129,7 @@
     //上传图片
     $('.send').click(function () {
         $.ajax({
-            url: "/uploadPicture",
+            url: "/user/uploadPicture",
             type: 'POST',
             cache: false,
             data: new FormData($('#pictureInfo')[0]),
